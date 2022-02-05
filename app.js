@@ -13,6 +13,14 @@ app.get('/v1/hello',get_hello)
 app.post('/v1/auth',post_auth);
 
 function get_weather(request,response){
+  if (request.query.token!=='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkNodXplTGlhbyIsImlhdCI6MTUxNjIzOTAyMn0.mQMG0leeWGMt8WGpHjgLiipniK3tPIgfESY0PeqlEWE'){
+    response.json({
+
+      "msg": "err token",
+      "code": 200
+  })
+  return
+  }
 	response.json({
     "coord": {
       "lon": -0.13,
@@ -57,27 +65,37 @@ function get_weather(request,response){
 })
 }
 function get_hello(request,response){
-	response.json({
-    
-    "msg": "world",
-    "code": 200
-})
+  console.log(request.query.token)
+  if (request.query.token==='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkNodXplTGlhbyIsImlhdCI6MTUxNjIzOTAyMn0.mQMG0leeWGMt8WGpHjgLiipniK3tPIgfESY0PeqlEWE'){
+    response.json({
+
+      "msg": "world",
+      "code": 200
+  })
+  }else{
+    response.json({
+
+      "msg": "err token",
+      "code": 200
+  })
+  }
+
 }
 
 function post_auth(request,response){
   console.log(request.body)
-  
-  var dataCur = new Date(); 
+
+  var dataCur = new Date();
   //dataCur = dataCur.getFullYear() + '-' + (dataCur.getMonth() + 1) + '-' + dataCur.getDate() + " 00:00:00";
   var dataCurPar = Date.parse(new Date(dataCur))/1000;
   dataCurPar += 86400 * 5;
-  
+
   var dataDefPar = new Date(parseInt(dataCurPar) * 1000);
   console.log(dataDefPar.toDateString())
   response.json({
       'token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkNodXplTGlhbyIsImlhdCI6MTUxNjIzOTAyMn0.mQMG0leeWGMt8WGpHjgLiipniK3tPIgfESY0PeqlEWE',
       'expires':dataDefPar
     })
-  
+
 
 }
