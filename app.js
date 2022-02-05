@@ -5,7 +5,7 @@ var express = require("express")
 var app = express()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.listen(3001)
+app.listen(3000)
 
 console.log('Node.js Express server is running on port 3000')
 app.get('/v1/weather',get_weather)
@@ -66,18 +66,18 @@ function get_hello(request,response){
 
 function post_auth(request,response){
   console.log(request.body)
-  if(request.body.username=='liu' && 
-  request.body.password=='123456'){
-    var result = crypto.createHash('md5').update(request.body.username).digest("hex")
-    response.json({
-      'token':result,
-      'msg':'success'
+  
+  var dataCur = new Date(); 
+  //dataCur = dataCur.getFullYear() + '-' + (dataCur.getMonth() + 1) + '-' + dataCur.getDate() + " 00:00:00";
+  var dataCurPar = Date.parse(new Date(dataCur))/1000;
+  dataCurPar += 86400 * 5;
+  
+  var dataDefPar = new Date(parseInt(dataCurPar) * 1000);
+  console.log(dataDefPar.toDateString())
+  response.json({
+      'token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkNodXplTGlhbyIsImlhdCI6MTUxNjIzOTAyMn0.mQMG0leeWGMt8WGpHjgLiipniK3tPIgfESY0PeqlEWE',
+      'expires':dataDefPar
     })
-  }else{
-    response.json({
-      'token':'',
-      'msg':'failed'
-    })
-  }
+  
 
 }
