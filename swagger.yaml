@@ -1,0 +1,203 @@
+swagger: "2.0"
+info:
+  description: "My v1 server."
+  version: "1.0.0"
+  title: "Swagger Learning"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "liaochu@oregonstate.edu"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "34.201.45.238:3000"
+basePath: "/v1"
+tags:
+- name: "service"
+  description: "Everything about your Pets"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+
+schemes:
+- "http"
+paths:
+
+  /auth:
+    post:
+      tags:
+      - "service"
+      summary: "User authentication"
+      description: "The user enters the user name and password for authentication."
+      operationId: "createUser"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Token"
+        "400":
+          description: "Invalid username supplied"
+        "404":
+          description: "User not found"
+
+  /hello:
+    get:
+      tags:
+      - "service"
+      summary: "Test hello"
+      description: ""
+      operationId: "hello"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/World"
+        default:
+          description: "failed operation"
+          
+  /weather:
+    get:
+      tags:
+      - "service"
+      summary: "get weather"
+      description: ""
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Weather_res"
+        default:
+          description: "failed operation"
+
+
+definitions:
+
+
+  User:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      password:
+        type: "string"
+    xml:
+      name: "User"
+  Token:
+    type: "object"
+    properties:
+      token:
+        type: "string"
+      msg:
+        type: "string"
+  World:
+    type: "object"
+    properties:
+      msg:
+        type: "string"
+
+  Coord:
+    type: "object"
+    properties:
+      lon:
+        type: "number"
+      lat:
+        type: "number"
+        
+  Weather:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      main:
+        type: "string"
+      description:
+        type: "string"
+      icon:
+        type: "string"
+  Main:
+    type: "object"
+    properties:
+      temp:
+        type: "number"
+      pressure:
+        type: "number"
+      humidity:
+        type: "number"
+      temp_min:
+        type: "number"
+      temp_max:
+        type: "number"
+  Wind:
+    type: "object"
+    properties:
+      speed:
+        type: "number"
+      deg:
+        type: "number"
+  Clouds:
+    type: "object"
+    properties:
+      all:
+        type: "number"
+  Sys:
+    type: "object"
+    properties:
+      type:
+        type: "number"
+      id:
+        type: "number"
+      country:
+        type: "string"
+      sunrise:
+        type: "number"
+      sunset:
+        type: "number"
+  Weather_res:
+    type: "object"
+    properties:
+      coord:
+        $ref: "#/definitions/Coord"
+      weather:
+        type: array
+        items:
+          $ref: "#/definitions/Weather"
+      base:
+        type: "string"
+      main:
+        $ref: "#/definitions/Main"
+      visibility:
+        type: "number"
+      wind:
+        $ref: "#/definitions/Wind"
+      clouds:
+        $ref: "#/definitions/Clouds"
+      dt:
+        type: "number"
+      sys:
+        $ref: "#/definitions/Sys"
+      id:
+        type: "number"
+      name:
+        type: "string"
+      cod:
+        type: "number"
+
+
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
