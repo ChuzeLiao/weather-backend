@@ -57,7 +57,12 @@ paths:
       operationId: "hello"
       produces:
       - "application/json"
-      parameters: []
+      parameters:
+      - in: query
+        name: token
+        description: token
+        required: false
+        type: string
       responses:
         "200":
           description: "successful operation"
@@ -74,7 +79,12 @@ paths:
       description: ""
       produces:
       - "application/json"
-      parameters: []
+      parameters:
+      - in: query
+        name: token
+        description: token
+        required: false
+        type: string
       responses:
         "200":
           description: "successful operation"
@@ -101,7 +111,7 @@ definitions:
     properties:
       token:
         type: "string"
-      msg:
+      expires:
         type: "string"
   World:
     type: "object"
